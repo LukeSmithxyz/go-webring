@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	flag "github.com/spf13/pflag"
 )
 
 type ring struct {
@@ -12,7 +14,17 @@ type ring struct {
 	url  string
 }
 
+// Pre-define all of our flags
+var (
+	flagPort  *int    = flag.IntP("port", "p", 9285, "Port go-webring binds to")
+	flagList  *string = flag.StringP("list", "l", "list.txt", "Path to list of webring members")
+	flagIndex *string = flag.StringP("index", "i", "index.html", "Path to home page template")
+	flagCert  *string = flag.StringP("cert", "c", "cert.crt", "Path to certificate")
+	flagKey   *string = flag.StringP("key", "k", "cert.key", "Path to private certificate key")
+)
+
 func main() {
+	flag.Parse()
 	list()
 }
 
