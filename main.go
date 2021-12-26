@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"strings"
 
 	flag "github.com/spf13/pflag"
@@ -17,23 +18,37 @@ type ring struct {
 
 // Pre-define all of our flags
 var (
-	flagPort  *int    = flag.IntP("port", "p", 9285, "Port go-webring binds to")
-	flagList  *string = flag.StringP("list", "l", "list.txt", "Path to list of webring members")
-	flagIndex *string = flag.StringP("index", "i", "index.html", "Path to home page template")
-	flagCert  *string = flag.StringP("cert", "c", "cert.crt", "Path to certificate")
-	flagKey   *string = flag.StringP("key", "k", "cert.key", "Path to private certificate key")
+	flagListen  *string = flag.StringP("listen", "l", "127.0.0.1:2857", "Host and port go-webring will listen on")
+	flagMembers *string = flag.StringP("members", "m", "list.txt", "Path to list of webring members")
+	flagIndex   *string = flag.StringP("index", "i", "index.html", "Path to home page template")
+	// These are not yet implemented
+	// flagCert  *string = flag.StringP("cert", "c", "cert.crt", "Path to certificate")
+	// flagKey   *string = flag.StringP("key", "k", "cert.key", "Path to private certificate key")
 )
 
 func main() {
 	flag.Parse()
-	ring := parseList()
-	fmt.Println(ring)
+	fmt.Println("Listening on", *flagListen)
+	fmt.Println("Looking for members in", *flagMembers)
+	fmt.Println("Building homepage with", *flagIndex)
+
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", root)
+	mux.HandleFunc("/next", next)
+	mux.HandleFunc("/previous", previous)
+	mux.HandleFunc("/random", random)
+
+	server := &http.Server{
+		Addr:    *flagListen,
+		Handler: mux,
+	}
+	server.ListenAndServe()
 }
 
 // List parses the list of members, appends the data to a slice of type list,
 // then returns the slice
 func parseList() []ring {
-	file, err := ioutil.ReadFile(*flagList)
+	file, err := ioutil.ReadFile(*flagMembers)
 	if err != nil {
 		log.Fatal("Error while loading list of webring members:", err)
 	}
@@ -46,17 +61,26 @@ func parseList() []ring {
 	return r
 }
 
-// createPage create the root webpage that will be served. It takes a []ring
-// argument to create the list of members that will be placed in the target HTML
-// element.
-func createPage(r []ring) {
+// createRoot creates the root webpage that will be served. It takes a []ring
+// parameter, generates a table based on it, then inserts that into the template
+// webpage.
+func createRoot(r []ring) {
 }
 
-func next() {
+// Serves the webpage created by createRoot()
+func root(writer http.ResponseWriter, request *http.Request) {
 }
 
-func previous() {
+// Redirects the visitor to the next member, wrapping around the list if the
+// next would be out-of-bounds
+func next(writer http.ResponseWriter, request *http.Request) {
 }
 
-func random() {
+// Redirects the visitor to the previous member, wrapping around the list of the
+// next would be out-of-bounds
+func previous(writer http.ResponseWriter, request *http.Request) {
+}
+
+// Redirects the visitor to a random member
+func random(writer http.ResponseWriter, request *http.Request) {
 }
