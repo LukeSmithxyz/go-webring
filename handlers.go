@@ -45,11 +45,10 @@ func next(writer http.ResponseWriter, request *http.Request) {
 			break
 		}
 	}
-	// TODO: Print output to the page telling the visitor that the member
-	// couldn't be found
+	http.Error(writer, "Ring member '"+host+"' not found.", 404)
 }
 
-// Redirects the visitor to the previous member, wrapping around the list of the
+// Redirects the visitor to the previous member, wrapping around the list if the
 // next would be out-of-bounds
 func previous(writer http.ResponseWriter, request *http.Request) {
 	host := request.URL.Query().Get("host")
@@ -67,8 +66,7 @@ func previous(writer http.ResponseWriter, request *http.Request) {
 			break
 		}
 	}
-	// TODO: Print output to the page telling the visitor that the member
-	// couldn't be found
+	http.Error(writer, "Ring member '"+host+"' not found.", 404)
 }
 
 // Redirects the visitor to a random member
