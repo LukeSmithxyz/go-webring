@@ -24,12 +24,15 @@ var (
 	// flagKey   *string = flag.StringP("key", "k", "cert.key", "Path to private certificate key")
 )
 
-func main() {
-	flag.Parse()
-	fmt.Println("Listening on", *flagListen)
-	fmt.Println("Looking for members in", *flagMembers)
-	fmt.Println("Building homepage with", *flagIndex)
+// Declare global variables for the list, index, and modification times for each
+var (
+	r            *[]ring
+	index        *string
+	rModTime     *int64
+	indexModTime *int64
+)
 
+func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", root)
 	mux.HandleFunc("/next", next)
@@ -41,4 +44,12 @@ func main() {
 		Handler: mux,
 	}
 	log.Fatalln(server.ListenAndServe())
+}
+
+func init() {
+	flag.Parse()
+	fmt.Println("Listening on", *flagListen)
+	fmt.Println("Looking for members in", *flagMembers)
+	r = parseList()
+	fmt.Println("Building homepage with", *flagIndex)
 }
