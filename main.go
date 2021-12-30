@@ -14,6 +14,13 @@ type ring struct {
 	url    string
 }
 
+type server struct {
+	ring         []ring
+	index        string
+	ringModTime  int64
+	indexModTime int64
+}
+
 // Pre-define all of our flags
 var (
 	flagListen  *string = flag.StringP("listen", "l", "127.0.0.1:2857", "Host and port go-webring will listen on")
@@ -24,32 +31,26 @@ var (
 	// flagKey   *string = flag.StringP("key", "k", "cert.key", "Path to private certificate key")
 )
 
-// Declare global variables for the list, index, and modification times for each
-var (
-	r            *[]ring
-	index        *string
-	rModTime     *int64
-	indexModTime *int64
-)
-
 func main() {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", root)
-	mux.HandleFunc("/next", next)
-	mux.HandleFunc("/previous", previous)
-	mux.HandleFunc("/random", random)
 
 	server := &http.Server{
 		Addr:    *flagListen,
 		Handler: mux,
 	}
+
 	log.Fatalln(server.ListenAndServe())
+
+	mux.HandleFunc("/", s.root)
+	mux.HandleFunc("/next", s.next)
+	mux.HandleFunc("/previous", s.previous)
+	mux.HandleFunc("/random", s.random)
 }
 
-func init() {
+func (s server) init() {
 	flag.Parse()
 	fmt.Println("Listening on", *flagListen)
 	fmt.Println("Looking for members in", *flagMembers)
-	r = parseList()
+	s.parseList()
 	fmt.Println("Building homepage with", *flagIndex)
 }

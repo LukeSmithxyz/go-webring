@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"math/rand"
@@ -10,13 +9,12 @@ import (
 )
 
 // Serves the webpage created by createRoot()
-func root(writer http.ResponseWriter, request *http.Request) {
-	if modify() {
-		r = parseList()
-		fmt.Println("Parsed the list again")
+func (s server) root(writer http.ResponseWriter, request *http.Request) {
+	if s.modify() {
+		s.parseList()
 	}
 	var table string
-	for _, member := range *r {
+	for _, member := range s.ring {
 		table = table + "  <tr>\n"
 		table = table + "    <td>" + member.handle + "</td>\n"
 		table = table + "    <td>" + link(member.url) + "</td>\n"
@@ -33,21 +31,21 @@ func root(writer http.ResponseWriter, request *http.Request) {
 
 // Redirects the visitor to the next member, wrapping around the list if the
 // next would be out-of-bounds
-func next(writer http.ResponseWriter, request *http.Request) {
-	if modify() {
-		r = parseList()
+func (s server) next(writer http.ResponseWriter, request *http.Request) {
+	if s.modify() {
+		s.parseList()
 	}
 	host := request.URL.Query().Get("host")
 	dest, success := "https://", false
-	for i, item := range *r {
+	for i, item := range s.ring {
 		if item.url == host {
-			if i+1 >= len(*r) {
-				dest = dest + (*r)[0].url
+			if i+1 >= len(s.ring) {
+				dest = dest + s.ring[0].url
 				http.Redirect(writer, request, dest, 302)
 				success = true
 				break
 			}
-			dest = dest + (*r)[i+1].url
+			dest = dest + s.ring[i+1].url
 			http.Redirect(writer, request, dest, 302)
 			success = true
 			break
@@ -60,20 +58,20 @@ func next(writer http.ResponseWriter, request *http.Request) {
 
 // Redirects the visitor to the previous member, wrapping around the list if the
 // next would be out-of-bounds
-func previous(writer http.ResponseWriter, request *http.Request) {
-	if modify() {
-		r = parseList()
+func (s server) previous(writer http.ResponseWriter, request *http.Request) {
+	if s.modify() {
+		s.parseList()
 	}
 	host := request.URL.Query().Get("host")
 	dest, success := "https://", false
-	for i, item := range *r {
+	for i, item := range s.ring {
 		if item.url == host {
 			if i-1 < 0 {
-				dest = dest + (*r)[len(*r)-1].url
+				dest = dest + s.ring[len(s.ring)-1].url
 				http.Redirect(writer, request, dest, 302)
 				break
 			}
-			dest = dest + (*r)[i-1].url
+			dest = dest + s.ring[i-1].url
 			http.Redirect(writer, request, dest, 302)
 			break
 		}
@@ -84,11 +82,11 @@ func previous(writer http.ResponseWriter, request *http.Request) {
 }
 
 // Redirects the visitor to a random member
-func random(writer http.ResponseWriter, request *http.Request) {
-	if modify() {
-		r = parseList()
+func (s server) random(writer http.ResponseWriter, request *http.Request) {
+	if s.modify() {
+		s.parseList()
 	}
 	rand.Seed(time.Now().Unix())
-	dest := "https://" + (*r)[rand.Intn(len(*r)-1)].url
+	dest := "https://" + s.ring[rand.Intn(len(s.ring)-1)].url
 	http.Redirect(writer, request, dest, 302)
 }
