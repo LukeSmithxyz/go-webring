@@ -3,6 +3,7 @@ package main
 import (
 	_ "embed"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 
@@ -16,7 +17,7 @@ type ring struct {
 
 type server struct {
 	ring         []ring
-	index        string
+	index        *template.Template
 	ringModTime  int64
 	indexModTime int64
 }
@@ -53,4 +54,5 @@ func (s server) init() {
 	fmt.Println("Looking for members in", *flagMembers)
 	s.parseList()
 	fmt.Println("Building homepage with", *flagIndex)
+	s.parseIndex()
 }

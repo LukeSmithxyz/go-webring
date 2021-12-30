@@ -2,7 +2,6 @@ package main
 
 import (
 	"html/template"
-	"log"
 	"math/rand"
 	"net/http"
 	"time"
@@ -10,8 +9,10 @@ import (
 
 // Serves the webpage created by createRoot()
 func (s server) root(writer http.ResponseWriter, request *http.Request) {
-	if s.modify() {
+	if s.modify("ring") {
 		s.parseList()
+	} else if s.modify("index") {
+		s.parseIndex()
 	}
 	var table string
 	for _, member := range s.ring {
@@ -20,19 +21,13 @@ func (s server) root(writer http.ResponseWriter, request *http.Request) {
 		table = table + "    <td>" + link(member.url) + "</td>\n"
 		table = table + "  </tr>\n"
 	}
-
-	tmpl, err := template.ParseFiles(*flagIndex)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	tmpl.Execute(writer, template.HTML(table))
+	s.index.Execute(writer, template.HTML(table))
 }
 
 // Redirects the visitor to the next member, wrapping around the list if the
 // next would be out-of-bounds
 func (s server) next(writer http.ResponseWriter, request *http.Request) {
-	if s.modify() {
+	if s.modify("ring") {
 		s.parseList()
 	}
 	host := request.URL.Query().Get("host")
@@ -59,7 +54,7 @@ func (s server) next(writer http.ResponseWriter, request *http.Request) {
 // Redirects the visitor to the previous member, wrapping around the list if the
 // next would be out-of-bounds
 func (s server) previous(writer http.ResponseWriter, request *http.Request) {
-	if s.modify() {
+	if s.modify("ring") {
 		s.parseList()
 	}
 	host := request.URL.Query().Get("host")
@@ -83,7 +78,7 @@ func (s server) previous(writer http.ResponseWriter, request *http.Request) {
 
 // Redirects the visitor to a random member
 func (s server) random(writer http.ResponseWriter, request *http.Request) {
-	if s.modify() {
+	if s.modify("ring") {
 		s.parseList()
 	}
 	rand.Seed(time.Now().Unix())
