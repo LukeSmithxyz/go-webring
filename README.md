@@ -25,7 +25,7 @@ run `go-webring` with those examples, first generate `index.html` from
 $ pandoc -s index.md -o index.html
 ```
 
-In *your** home page template, place the string `{{ . }}` wherever you want the
+In *your* home page template, place the string `{{ . }}` wherever you want the
 table of members inserted. It's a regular HTML table so you can style it with
 CSS in the template's `<head>` or in a separate `.css` file.
 
