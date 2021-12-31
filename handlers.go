@@ -8,7 +8,7 @@ import (
 )
 
 // Serves the webpage created by createRoot()
-func (m *model) root(writer http.ResponseWriter, request *http.Request) {
+func (m model) root(writer http.ResponseWriter, request *http.Request) {
 	if m.modify("ring") {
 		m.parseList()
 	} else if m.modify("index") {
@@ -26,7 +26,7 @@ func (m *model) root(writer http.ResponseWriter, request *http.Request) {
 
 // Redirects the visitor to the next member, wrapping around the list if the
 // next would be out-of-bounds
-func (m *model) next(writer http.ResponseWriter, request *http.Request) {
+func (m model) next(writer http.ResponseWriter, request *http.Request) {
 	if m.modify("ring") {
 		m.parseList()
 	}
@@ -53,7 +53,7 @@ func (m *model) next(writer http.ResponseWriter, request *http.Request) {
 
 // Redirects the visitor to the previous member, wrapping around the list if the
 // next would be out-of-bounds
-func (m *model) previous(writer http.ResponseWriter, request *http.Request) {
+func (m model) previous(writer http.ResponseWriter, request *http.Request) {
 	if m.modify("ring") {
 		m.parseList()
 	}
@@ -77,7 +77,7 @@ func (m *model) previous(writer http.ResponseWriter, request *http.Request) {
 }
 
 // Redirects the visitor to a random member
-func (m *model) random(writer http.ResponseWriter, request *http.Request) {
+func (m model) random(writer http.ResponseWriter, request *http.Request) {
 	if m.modify("ring") {
 		m.parseList()
 	}
