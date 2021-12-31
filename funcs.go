@@ -8,6 +8,11 @@ import (
 	"strings"
 )
 
+// Link returns an HTML, HTTPS link of a given URI
+func link(l string) string {
+	return "<a href='https://" + l + "'>" + l + "</a>"
+}
+
 // parseIndex parses the index template and returns a template struct.
 func (m *model) parseIndex() {
 	tmpl, err := template.ParseFiles(*flagIndex)
@@ -29,11 +34,6 @@ func (m *model) parseList() {
 		fields := strings.Fields(line)
 		m.ring = append(m.ring, ring{handle: fields[0], url: fields[1]})
 	}
-}
-
-// Link returns an HTML, HTTPS link of a given URI
-func link(l string) string {
-	return "<a href='https://" + l + "'>" + l + "</a>"
 }
 
 // Modify takes arguments "index" or "ring" and returns true if either have been
