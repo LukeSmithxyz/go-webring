@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2021 Amolith <amolith@secluded.site>
+//
+// SPDX-License-Identifier: BSD-2-Clause
+
 package main
 
 import (
