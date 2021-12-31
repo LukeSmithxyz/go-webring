@@ -7,6 +7,16 @@ SPDX-License-Identifier: CC0-1.0
 # go-webring
 Simple webring implementation
 
+After [installing Go](https://go.dev/dl/) and [pandoc](https://pandoc.org/) …
+``` shell
+git clone https://git.sr.ht/~amolith/go-webring
+cd go-webring
+pandoc -s index.md -o index.html
+go build
+./go-webring
+xdg-open http://127.0.0.1:2857
+```
+
 ## Usage
 
 ``` text
@@ -44,6 +54,6 @@ example `index.md`.
 </tr>
 ```
 
-You don't *have* to create your webring home page in Markdown, that's just what
-I found easiest. As long as your HTML template includes `{{ . }}`, the table
-will show up.
+Note that you don't *have* to create your webring home page in Markdown, that's
+just what I found easiest. As long as your HTML template includes `{{ . }}`, the
+table will show up.
