@@ -5,6 +5,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"math/rand"
 	"net/http"
@@ -14,8 +15,11 @@ import (
 // Serves the webpage created by createRoot()
 func (m model) root(writer http.ResponseWriter, request *http.Request) {
 	if m.modify("ring") {
+		fmt.Println("Ring modified, clearing field and re-parsing")
 		m.parseList()
-	} else if m.modify("index") {
+	}
+	if m.modify("index") {
+		fmt.Println("Index modified, clearing field and re-parsing")
 		m.parseIndex()
 	}
 	var table string
@@ -32,6 +36,7 @@ func (m model) root(writer http.ResponseWriter, request *http.Request) {
 // next would be out-of-bounds
 func (m model) next(writer http.ResponseWriter, request *http.Request) {
 	if m.modify("ring") {
+		fmt.Println("Ring modified, clearing field and re-parsing")
 		m.parseList()
 	}
 	host := request.URL.Query().Get("host")
@@ -59,6 +64,7 @@ func (m model) next(writer http.ResponseWriter, request *http.Request) {
 // next would be out-of-bounds
 func (m model) previous(writer http.ResponseWriter, request *http.Request) {
 	if m.modify("ring") {
+		fmt.Println("Ring modified, clearing field and re-parsing")
 		m.parseList()
 	}
 	host := request.URL.Query().Get("host")
@@ -83,6 +89,7 @@ func (m model) previous(writer http.ResponseWriter, request *http.Request) {
 // Redirects the visitor to a random member
 func (m model) random(writer http.ResponseWriter, request *http.Request) {
 	if m.modify("ring") {
+		fmt.Println("Ring modified, clearing field and re-parsing")
 		m.parseList()
 	}
 	rand.Seed(time.Now().Unix())

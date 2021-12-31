@@ -19,16 +19,23 @@ func link(l string) string {
 
 // parseIndex parses the index template and returns a template struct.
 func (m *model) parseIndex() {
+	m.index = nil
 	tmpl, err := template.ParseFiles(*flagIndex)
 	if err != nil {
 		log.Fatal(err)
 	}
 	m.index = tmpl
+	tmplStat, err := os.Stat(*flagIndex)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	m.indexModTime = tmplStat.ModTime().Unix()
 }
 
 // List parses the list of members, appends the data to a slice of type list,
 // then returns the slice
 func (m *model) parseList() {
+	m.ring = nil
 	file, err := ioutil.ReadFile(*flagMembers)
 	if err != nil {
 		log.Fatal("Error while loading list of webring members: ", err)
@@ -38,32 +45,33 @@ func (m *model) parseList() {
 		fields := strings.Fields(line)
 		m.ring = append(m.ring, ring{handle: fields[0], url: fields[1]})
 	}
+	fileStat, err := os.Stat(*flagMembers)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	m.ringModTime = fileStat.ModTime().Unix()
 }
 
 // Modify takes arguments "index" or "ring" and returns true if either have been
 // modified since last read
 func (m *model) modify(a string) bool {
 	if a == "ring" {
-		members, err := os.Stat(*flagMembers)
+		ringStat, err := os.Stat(*flagMembers)
 		if err != nil {
 			log.Fatalln(err)
 		}
-		curRingModTime := members.ModTime().Unix()
-		if m.ringModTime == 0 {
-			m.ringModTime = curRingModTime
-		} else if m.ringModTime < curRingModTime {
+		curRingModTime := ringStat.ModTime().Unix()
+		if m.ringModTime < curRingModTime {
 			return true
 		}
 		return false
 	} else if a == "index" {
-		index, err := os.Stat(*flagIndex)
+		indexStat, err := os.Stat(*flagIndex)
 		if err != nil {
 			log.Fatalln(err)
 		}
-		curIndexModTime := index.ModTime().Unix()
-		if m.indexModTime == 0 {
-			m.indexModTime = curIndexModTime
-		} else if m.indexModTime < curIndexModTime {
+		curIndexModTime := indexStat.ModTime().Unix()
+		if m.indexModTime < curIndexModTime {
 			return true
 		}
 		return false
