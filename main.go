@@ -15,7 +15,7 @@ type ring struct {
 	url    string
 }
 
-type server struct {
+type model struct {
 	ring         []ring
 	index        *template.Template
 	ringModTime  int64
@@ -33,26 +33,34 @@ var (
 )
 
 func main() {
+	m := model{}
+	m.init()
+
 	mux := http.NewServeMux()
 
-	server := &http.Server{
+	httpServer := &http.Server{
 		Addr:    *flagListen,
 		Handler: mux,
 	}
 
-	log.Fatalln(server.ListenAndServe())
+	mux.HandleFunc("/", m.root)
+	mux.HandleFunc("/next", m.next)
+	mux.HandleFunc("/previous", m.previous)
+	mux.HandleFunc("/random", m.random)
 
-	mux.HandleFunc("/", s.root)
-	mux.HandleFunc("/next", s.next)
-	mux.HandleFunc("/previous", s.previous)
-	mux.HandleFunc("/random", s.random)
+	if err := httpServer.ListenAndServe(); err == http.ErrServerClosed {
+		log.Println("Web server closed")
+	} else {
+		log.Fatalln(err)
+	}
 }
 
-func (s server) init() {
+func (m *model) init() {
 	flag.Parse()
 	fmt.Println("Listening on", *flagListen)
 	fmt.Println("Looking for members in", *flagMembers)
-	s.parseList()
+	m.parseList()
+	fmt.Println("Found", len(m.ring), "members")
 	fmt.Println("Building homepage with", *flagIndex)
-	s.parseIndex()
+	m.parseIndex()
 }
