@@ -30,7 +30,7 @@ Usage of ./go-webring
   -m, --members string   Path to list of webring members (default "list.txt")
 ```
 
-This webring exposes handles three paths:
+This webring implementation handles four paths:
 - **Root:** returns the home page template replacing the string "`{{ . }}`" with
   an HTML table of ring members
 - **Next:** returns a 302 redirect pointing to the next site in the list
