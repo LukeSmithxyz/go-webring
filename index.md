@@ -52,7 +52,7 @@ Raw HTML to show up in the webpage as demonstration
     <a href="https://example.com/next?host=example.com">→</a>
 </p>
 
-# Table of members
+## Table of members
 <table>
   <tr>
     <th>Member UUID</th>
