@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC0-1.0
 [![Donate with fosspay][fosspay-shield]][fosspay]
 ![Time spent on project][wakapi-shield]
 
-Simple webring implementation
+Simple webring implementation created for the [Fediring](https://fediring.net/)
 
 ``` shell
 git clone https://git.sr.ht/~amolith/go-webring
