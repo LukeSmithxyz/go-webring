@@ -38,9 +38,10 @@ This webring exposes handles three paths:
 - **Random:** returns a 302 redirect pointing to a random site in the list
 
 The **next** and **previous** paths require a `?host=` parameter containing a
-URL-encoded URI of the that's doing the directing. For example, if Sam is a
-member of a webring on `ring.com` and her site is `sometilde.com/~sam`, she will
-need the following links on her site.
+URL-encoded URI of the site being visited. For example, if Sam is a member of a
+webring on `ring.com` and her site is `sometilde.com/~sam`, she will need the
+following links on her page for directing visitors to the next/previous ring
+members.
 
 - `https://ring.com/next?host=sometilde.com%2F~sam`
 - `https://ring.com/previous?host=sometilde.com%2F~sam`
