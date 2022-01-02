@@ -39,12 +39,12 @@ This webring implementation handles four paths:
 
 The **next** and **previous** paths require a `?host=` parameter containing a
 URL-encoded URI of the site being visited. For example, if Sam is a member of a
-webring on `ring.com` and her site is `sometilde.com/~sam`, she will need the
+webring on `example.com` and her site is `sometilde.com/~sam`, she will need the
 following links on her page for directing visitors to the next/previous ring
 members.
 
-- `https://ring.com/next?host=sometilde.com%2F~sam`
-- `https://ring.com/previous?host=sometilde.com%2F~sam`
+- `https://example.com/next?host=sometilde.com%2F~sam`
+- `https://example.com/previous?host=sometilde.com%2F~sam`
 
 ### With provided examples
 
@@ -111,17 +111,17 @@ will be the following.
 </tr>
 ```
 
-Assuming this webring is on `ring.com`, Bob will need to have the following
+Assuming this webring is on `example.com`, Bob will need to have the following
 links on his page.
 
-- `https://ring.com/next?host=bobssite.com`
-- `https://ring.com/previous?host=bobssite.com`
+- `https://example.com/next?host=bobssite.com`
+- `https://example.com/previous?host=bobssite.com`
 
 Because Sam has a forward slash in her URI, she'll need to percent-encode it so
 browsers interpret the parameter correctly.
 
-- `https://ring.com/next?host=sometilde.com%2F~sam`
-- `https://ring.com/previous?host=sometilde.com%2F~sam`
+- `https://example.com/next?host=sometilde.com%2F~sam`
+- `https://example.com/previous?host=sometilde.com%2F~sam`
 
 
 ## Questions & Contributions

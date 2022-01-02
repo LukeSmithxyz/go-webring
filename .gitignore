@@ -4,3 +4,6 @@
 
 # Big HTML webpage generated with pandoc
 index.html
+
+# Build directory
+/out/
