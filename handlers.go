@@ -44,7 +44,7 @@ func (m model) next(writer http.ResponseWriter, request *http.Request) {
 	scheme, success := "https://", false
 	for i, item := range m.ring {
 		if item.url == host {
-			for j := i + 1; j < len(m.ring)+1; j++ {
+			for j := i + 1; j < len(m.ring)+i; j++ {
 				dest := scheme + m.ring[j%len(m.ring)].url
 				if is200(dest) {
 					http.Redirect(writer, request, dest, 302)
@@ -72,7 +72,7 @@ func (m model) previous(writer http.ResponseWriter, request *http.Request) {
 	scheme, success := "https://", false
 	for i, item := range m.ring {
 		if item.url == host {
-			for j := i - 1; j < len(m.ring)-1; j-- {
+			for j := i - 1; j < len(m.ring)-i; j-- {
 				dest := scheme + m.ring[j%len(m.ring)].url
 				if is200(dest) {
 					http.Redirect(writer, request, dest, 302)
