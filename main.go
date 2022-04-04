@@ -5,7 +5,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -60,10 +59,10 @@ func main() {
 
 func (m *model) init() {
 	flag.Parse()
-	fmt.Println("Listening on", *flagListen)
-	fmt.Println("Looking for members in", *flagMembers)
+	log.Println("Listening on", *flagListen)
+	log.Println("Looking for members in", *flagMembers)
 	m.parseList()
-	fmt.Println("Found", len(m.ring), "members")
-	fmt.Println("Building homepage with", *flagIndex)
+	log.Println("Found", len(m.ring), "members")
+	log.Println("Building homepage with", *flagIndex)
 	m.parseIndex()
 }
