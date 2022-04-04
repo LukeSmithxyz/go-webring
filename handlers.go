@@ -54,7 +54,6 @@ func (m model) next(writer http.ResponseWriter, request *http.Request) {
 				log.Println(dest + " did not return status 200 OK, skipping to next site")
 			}
 		}
-		break
 	}
 	if success == false {
 		http.Error(writer, "Ring member '"+host+"' not found.", 404)
