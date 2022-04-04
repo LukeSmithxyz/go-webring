@@ -33,27 +33,28 @@ func (m model) root(writer http.ResponseWriter, request *http.Request) {
 }
 
 // Redirects the visitor to the next member, wrapping around the list if the
-// next would be out-of-bounds
+// next would be out-of-bounds, and ensuring the destination returns a 200 OK
+// status before performing the redirect.
 func (m model) next(writer http.ResponseWriter, request *http.Request) {
 	if m.modify("ring") {
 		log.Println("Ring modified, clearing field and re-parsing")
 		m.parseList()
 	}
 	host := request.URL.Query().Get("host")
-	dest, success := "https://", false
+	scheme, success := "https://", false
 	for i, item := range m.ring {
 		if item.url == host {
-			if i+1 >= len(m.ring) {
-				dest = dest + m.ring[0].url
-				http.Redirect(writer, request, dest, 302)
-				success = true
-				break
+			for j := i + 1; j < len(m.ring)+1; j++ {
+				dest := scheme + m.ring[j%len(m.ring)].url
+				if is200(dest) {
+					http.Redirect(writer, request, dest, 302)
+					success = true
+					break
+				}
+				log.Println(dest + " did not return status 200 OK, skipping to next site")
 			}
-			dest = dest + m.ring[i+1].url
-			http.Redirect(writer, request, dest, 302)
-			success = true
-			break
 		}
+		break
 	}
 	if success == false {
 		http.Error(writer, "Ring member '"+host+"' not found.", 404)
@@ -61,24 +62,26 @@ func (m model) next(writer http.ResponseWriter, request *http.Request) {
 }
 
 // Redirects the visitor to the previous member, wrapping around the list if the
-// next would be out-of-bounds
+// next would be out-of-bounds, and ensuring the destination returns a 200 OK
+// status before performing the redirect.
 func (m model) previous(writer http.ResponseWriter, request *http.Request) {
 	if m.modify("ring") {
 		log.Println("Ring modified, clearing field and re-parsing")
 		m.parseList()
 	}
 	host := request.URL.Query().Get("host")
-	dest, success := "https://", false
+	scheme, success := "https://", false
 	for i, item := range m.ring {
 		if item.url == host {
-			if i-1 < 0 {
-				dest = dest + m.ring[len(m.ring)-1].url
-				http.Redirect(writer, request, dest, 302)
-				break
+			for j := i - 1; j < len(m.ring)-1; j-- {
+				dest := scheme + m.ring[j%len(m.ring)].url
+				if is200(dest) {
+					http.Redirect(writer, request, dest, 302)
+					success = true
+					break
+				}
+				log.Println(dest + " did not return status 200 OK, skipping to next site")
 			}
-			dest = dest + m.ring[i-1].url
-			http.Redirect(writer, request, dest, 302)
-			break
 		}
 	}
 	if success == false {

@@ -8,6 +8,7 @@ import (
 	"html/template"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"strings"
 )
@@ -79,4 +80,16 @@ func (m *model) modify(a string) bool {
 		log.Fatalln("Please call modify() with argument of either \"index\" or \"ring\"")
 	}
 	return true
+}
+
+func is200(site string) bool {
+	resp, err := http.Get(site)
+	if err != nil {
+		log.Println(err)
+		return false
+	}
+	if resp.StatusCode == http.StatusOK {
+		return true
+	}
+	return false
 }
