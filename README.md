@@ -148,7 +148,7 @@ section.*
 [fosspay]: https://secluded.site/donate/
 [fosspay-shield]: https://shields.io/badge/donate-fosspay-yellow
 
-[wakapi-shield]: https://img.shields.io/endpoint?url=https://waka.secluded.site/api/compat/shields/v1/amolith/project:go-webring&color=blue&label=time%20spent
+[wakapi-shield]: https://img.shields.io/endpoint?url=https://waka.secluded.site/api/compat/shields/v1/amolith/interval:any/project:go-webring&color=blue&label=time%20spent
 
 [email]: mailto:~amolith/public-inbox@lists.sr.ht
 [irc]: irc://irc.nixnet.services/#secluded
