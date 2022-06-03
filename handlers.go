@@ -57,7 +57,7 @@ func (m model) next(writer http.ResponseWriter, request *http.Request) {
 		}
 	}
 	if success == false {
-		log.Println(referer + "Site not in registry. Redirecting to a random site.")
+		log.Println("Site not in registry. Redirecting to a random site.")
 		m.random(writer, request)
 	}
 }
@@ -99,7 +99,7 @@ please email amolith@secluded.site and let him (me) know what's up.`, 500)
 			return
 		}
 	}
-	log.Println(referer + "Site not in registry. Redirecting to a random site.")
+	log.Println("Site not in registry. Redirecting to a random site.")
 	m.random(writer, request)
 	return
 }
