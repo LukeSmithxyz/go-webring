@@ -1,2 +1,6 @@
-member1	example.com
-member2	sometilde.com/~member2
+Luke Smith	lukesmith.xyz
+Not Related!	notrelated.xyz
+LARBS	larbs.xyz
+LindyPress.net	lindypress.net
+LandChad.net	landchad.net
+Based Cooking	based.cooking
