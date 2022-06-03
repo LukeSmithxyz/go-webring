@@ -1,2 +1,2 @@
-member1 example.com
-member2 sometilde.com/~member2
+member1	example.com
+member2	sometilde.com/~member2
