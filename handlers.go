@@ -24,10 +24,7 @@ func (m model) root(writer http.ResponseWriter, request *http.Request) {
 	}
 	var table string
 	for _, member := range m.ring {
-		table = table + "  <tr>\n"
-		table = table + "    <td>" + member.handle + "</td>\n"
-		table = table + "    <td>" + link(member.url) + "</td>\n"
-		table = table + "  </tr>\n"
+		table = table + "<li><a href=\"https://" + member.url + "\">" + member.handle + "</a></li>\n"
 	}
 	m.index.Execute(writer, template.HTML(table))
 }

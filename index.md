@@ -52,13 +52,9 @@ Raw HTML to show up in the webpage as demonstration
     <a href="https://example.com/next?host=example.com">→</a>
 </p>
 
-## Table of members
-<table>
-  <tr>
-    <th>Member UUID</th>
-    <th>Member domain/URI</th>
-  </tr>
+## Index of members
+<ol>
   {{ . }}
-</table>
+</ol>
 
 This webring is powered by [go-webring](https://git.sr.ht/~amolith/go-webring).

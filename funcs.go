@@ -13,11 +13,6 @@ import (
 	"strings"
 )
 
-// Link returns an HTML, HTTPS link of a given URI
-func link(l string) string {
-	return "<a href='https://" + l + "'>" + l + "</a>"
-}
-
 // parseIndex parses the index template and returns a template struct.
 func (m *model) parseIndex() {
 	m.index = nil
