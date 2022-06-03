@@ -111,6 +111,6 @@ func (m model) random(writer http.ResponseWriter, request *http.Request) {
 		m.parseList()
 	}
 	rand.Seed(time.Now().Unix())
-	dest := "https://" + m.ring[rand.Intn(len(m.ring)-1)].url
+	dest := "https://" + m.ring[rand.Intn(len(m.ring))].url
 	http.Redirect(writer, request, dest, 302)
 }
