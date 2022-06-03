@@ -9,7 +9,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"net/url"
 	"os"
 	"strings"
 )
@@ -89,15 +88,4 @@ func is200(site string) bool {
 		return true
 	}
 	return false
-}
-
-func getRefDomain(request *http.Request) string {
-	ref := request.Referer()
-	parsed, err := url.Parse(ref)
-	if err != nil {
-		log.Fatal(err)
-	}
-	parts := strings.Split(parsed.Hostname(), ".")
-	domain := parts[len(parts)-2] + "." + parts[len(parts)-1]
-	return domain
 }

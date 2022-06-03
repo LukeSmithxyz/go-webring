@@ -9,6 +9,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -37,11 +38,11 @@ func (m model) next(writer http.ResponseWriter, request *http.Request) {
 		log.Println("Ring modified, clearing field and re-parsing")
 		m.parseList()
 	}
-	host := getRefDomain(request)
+	referer := request.Referer()
 	scheme, success := "https://", false
 	length := len(m.ring)
 	for i, item := range m.ring {
-		if item.url == host {
+		if strings.Contains(referer, item.url) {
 			for j := i + 1; j < length+i; j++ {
 				dest := scheme + m.ring[j%length].url
 				log.Println("Checking '" + dest + "'")
@@ -56,7 +57,8 @@ func (m model) next(writer http.ResponseWriter, request *http.Request) {
 		}
 	}
 	if success == false {
-		http.Error(writer, "Ring member '"+host+"' not found.", 404)
+		log.Println(referer + "Site not in registry. Redirecting to a random site.")
+		m.random(writer, request)
 	}
 }
 
@@ -68,11 +70,11 @@ func (m model) previous(writer http.ResponseWriter, request *http.Request) {
 		log.Println("Ring modified, clearing field and re-parsing")
 		m.parseList()
 	}
-	host := getRefDomain(request)
+	referer := request.Referer()
 	scheme := "https://"
 	length := len(m.ring)
 	for index, item := range m.ring {
-		if item.url == host {
+		if strings.Contains(referer, item.url) {
 			// from here to start of list
 			for i := index - 1; i > 0; i-- {
 				dest := scheme + m.ring[i].url
@@ -97,7 +99,8 @@ please email amolith@secluded.site and let him (me) know what's up.`, 500)
 			return
 		}
 	}
-	http.Error(writer, "Ring member '"+host+"' not found.", 404)
+	log.Println(referer + "Site not in registry. Redirecting to a random site.")
+	m.random(writer, request)
 	return
 }
 
