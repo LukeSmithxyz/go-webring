@@ -38,7 +38,6 @@ func (m *model) parseList() {
 	}
 	lines := strings.Split(string(file), "\n")
 	for _, line := range lines[:len(lines)-1] {
-		// fields := strings.Fields(line)
 		fields := strings.Split(line, "\t")
 		m.ring = append(m.ring, ring{handle: fields[0], url: fields[1]})
 	}
