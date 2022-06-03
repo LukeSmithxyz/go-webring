@@ -28,28 +28,28 @@ inappropriate
 
 Table of required links
 
-| Destination     | Link                                                                                         |
-|-----------------|----------------------------------------------------------------------------------------------|
-| Previous member | [https://example.com/previous?host=YOURDOMAIN](https://example.com/previous?host=YOURDOMAIN) |
-| Next member     | [https://example.com/next?host=YOURDOMAIN](https://example.com/next?host=YOURDOMAIN)         |
-| Home page       | [https://example.com](https://example.com)                                                   |
+| Destination     | Link                                                         |
+|-----------------|--------------------------------------------------------------|
+| Previous member | [https://example.com/previous](https://example.com/previous) |
+| Next member     | [https://example.com/next](https://example.com/next)         |
+| Home page       | [https://example.com](https://example.com)                   |
 
 Some example HTML for linking to the next and previous ring members.
 
 ```html
 <p>
-    <a href="https://example.com/previous?host=example.com">←</a>
+    <a href="https://example.com/previous">←</a>
     <a href="https://example.com/">Example Webring</a>
-    <a href="https://example.com/next?host=example.com">→</a>
+    <a href="https://example.com/next">→</a>
 </p>
 ```
 
 Raw HTML to show up in the webpage as demonstration
 
 <p>
-    <a href="https://example.com/previous?host=example.com">←</a>
+    <a href="https://example.com/previous">←</a>
     <a href="https://example.com/">Example Webring</a>
-    <a href="https://example.com/next?host=example.com">→</a>
+    <a href="https://example.com/next">→</a>
 </p>
 
 ## Index of members

@@ -37,7 +37,7 @@ func (m model) next(writer http.ResponseWriter, request *http.Request) {
 		log.Println("Ring modified, clearing field and re-parsing")
 		m.parseList()
 	}
-	host := request.URL.Query().Get("host")
+	host := getRefDomain(request)
 	scheme, success := "https://", false
 	length := len(m.ring)
 	for i, item := range m.ring {
@@ -68,7 +68,7 @@ func (m model) previous(writer http.ResponseWriter, request *http.Request) {
 		log.Println("Ring modified, clearing field and re-parsing")
 		m.parseList()
 	}
-	host := request.URL.Query().Get("host")
+	host := getRefDomain(request)
 	scheme := "https://"
 	length := len(m.ring)
 	for index, item := range m.ring {
