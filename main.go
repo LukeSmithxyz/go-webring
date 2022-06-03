@@ -47,8 +47,13 @@ func main() {
 
 	mux.HandleFunc("/", m.root)
 	mux.HandleFunc("/next", m.next)
+	mux.HandleFunc("/n", m.next)
 	mux.HandleFunc("/previous", m.previous)
+	mux.HandleFunc("/prev", m.previous)
+	mux.HandleFunc("/p", m.previous)
 	mux.HandleFunc("/random", m.random)
+	mux.HandleFunc("/rand", m.random)
+	mux.HandleFunc("/r", m.random)
 
 	if err := httpServer.ListenAndServe(); err == http.ErrServerClosed {
 		log.Println("Web server closed")
