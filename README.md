@@ -2,7 +2,7 @@
 
 A go program for managing a webring.
 
-This is originally a fork of [Amolith](https://secluded.site)'s [go-webring](https://git.sr.ht/~amolith/go-webring), which is used for [Fediring](https://fediring.net/).
+This is originally a fork of [Amolith](https://secluded.site)'s [go-webring](https://sr.ht/~amolith/go-webring/), which is used for [Fediring](https://fediring.net/).
 
 
 ``` shell
