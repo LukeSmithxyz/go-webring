@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Webring</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<style>
+body {
+    max-width: 650px ;
+    margin: 0 auto ;
+}
+    h1,h2,h3,h4,h5,h6 {
+        text-align: center ;
+    }
+</style>
+<body>
+<header><h1>Webring</h1></header>
+<main>
+
+    <h2>What is a webring?</h2>
+
+    <p>A webring is an alliance of sites which link to their "neighbors" in a circular way. Each site places "Next site" and "Previous site" links which, if a user continues to follow, he will see every site in the ring and end up where he started.</p>
+
+    <p>This is a classic way to discover artisanal sites on the internet without the mediation of search engines, "big tech" or corporate landing pages.</p>
+
+    <h2>Table of members</h2>
+
+    <p>(The webring program will fill this list with the webring member sites.)</p>
+
+    <ul>
+    {{ . }}
+    </ul>
+
+    <h2>Instructions</h2>
+
+    <p>Here you can list the instructions for joining the webring, which will resemble the following:</p>
+
+    <ol>
+        <li>Add the required links to your site (see below).</li>
+        <li>Email the administrator of the webring giving him the URL and name of your site.</li>
+        <li>Wait for approval.</li>
+    </ol>
+
+
+    <h3>Required linkage</h3>
+
+    <p>There are four main links that the webring provides:</p>
+
+    <ol>
+        <li><code>/next</code> &ndash; Go to the next site in the ring.</li>
+        <li><code>/previous</code> &ndash; Go to the previous site in the ring.</li>
+        <li><code>/</code> &ndash; Go to the webring mainpage (this page of yours).</li>
+        <li><code>/random</code> &ndash; Go to a random page in the webring.</li>
+    </ol>
+
+    <p>Note that if a site not integrated into the webring links to <code>/next</code> or <code>/previous</code>, or if no HTTP referer is detected, they will also direct to random sites.</p>
+
+    <p>All of these links can be integrated into a block like the following, which should appear on every participating page (although perhaps with some styling differences).</p>
+
+<pre><code>&lt;div style="text-align:center"&gt;
+&lt;a href="https://example.com/previous"&gt;←&lt;/a&gt;
+&lt;a href="https://example.com/"&gt;Name of Webring&lt;/a&gt;
+&lt;a href="https://example.com/next"&gt;→&lt;/a&gt;
+&lt;/br&gt;
+&lt;a href="https://example.com/random"&gt;Random&lt;/a&gt;
+&lt;/div&gt;
+</code></pre>
+
+    <p>Note that <code>example.com</code> here is the URL of the webring mainpage.</p>
+
+    <p>This will appear as:</p>
+
+    <div style="text-align:center">
+    <a href="https://example.com/previous">←</a>
+    <a href="https://example.com/">Name of Webring</a>
+    <a href="https://example.com/next">→</a>
+    </br>
+    <a href="https://example.com/random">Random</a>
+    </div>
+
+    <p>Once an applicant site has the proper links on his page, he may submit his page for approval.
+    Once approved, the site will receive "neighbors" in the webring and will appear in the list/ring for others.</p>
+
+</main>
+</body>
+</html>
