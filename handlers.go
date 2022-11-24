@@ -54,6 +54,10 @@ func (m model) next(writer http.ResponseWriter, request *http.Request) {
 				}
 				log.Println("Something went wrong accessing '" + dest + "', skipping site")
 			}
+			http.Error(writer, `It would appear that either none of the ring members are accessible
+(unlikely) or the backend is broken (more likely). In either case,
+please contact the admin and let them know what's up.`, 500)
+			return
 		}
 	}
 	if success == false {
@@ -95,7 +99,7 @@ func (m model) previous(writer http.ResponseWriter, request *http.Request) {
 			}
 			http.Error(writer, `It would appear that either none of the ring members are accessible
 (unlikely) or the backend is broken (more likely). In either case,
-please email amolith@secluded.site and let him (me) know what's up.`, 500)
+please contact the admin and let them know what's up.`, 500)
 			return
 		}
 	}
