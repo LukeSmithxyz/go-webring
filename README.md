@@ -2,8 +2,8 @@
 
 A go program for managing a webring.
 
-This is originally a fork of [Amolith](https://secluded.site)'s [go-webring](https://sr.ht/~amolith/go-webring/), which is used for [Fediring](https://fediring.net/).
-
+This is originally a fork of [Amolith](https://secluded.site)'s [go-webring](https://sr.ht/~amolith/go-webring/), which
+is used for [Fediring](https://fediring.net/).
 
 ``` shell
 git clone https://git.sr.ht/~amolith/go-webring
@@ -13,15 +13,18 @@ cp example-index.html index.html
 ./go-webring
 ```
 
-The service runs on port 2857, so you can have NginX/etc. proxy_pass to that port for the domain you want to use as a host.
+The service runs on port 2857, so you can have NginX/etc. proxy_pass to that port for the domain you want to use as a
+host.
 
-The `index.html` is the main webpage of your ring. It can be customized to your liking and a list of the sites in the ring will be addedd in the place of the `{{ . }}`.
+The `index.html` is the main webpage of your ring. It can be customized to your liking and a list of the sites in the
+ring will be addedd in the place of the `{{ . }}`.
 
 ## Pages
 
 This program produces four main pages for use as links:
 
-- `/` -- The index. A mainpage in `index.html` where you can customize your webring homepage. This lists all sites in the webring automatically.
+- `/` -- The index. A mainpage in `index.html` where you can customize your webring homepage. This lists all sites in
+  the webring automatically.
 - `/next` -- Go to the next site in the webring (from whichever site you are linked from).
 - `/previous` -- Go to the previous site in the webring.
 - `/random` -- Go to a random site in the webring.
